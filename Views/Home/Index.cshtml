@@ -1,0 +1,47 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Profit Center: Home";
+}
+
+<h4>Claims from the signed-in user's token</h4>
+
+
+@{
+    var user = ViewData["User"] as ClaimsPrincipal;
+}
+
+<table class="table table-striped table-bordered table-condensed table-hover">
+    <tr>
+        <th>ClaimType</th>
+        <th>Value</th>
+    </tr>
+
+    @foreach (var claim in user.Claims)
+    {
+        <tr>
+            @{
+                if (claim.Type == "groups")
+                {
+                    <td><b>@claim.Type</b></td>
+                }
+                else
+                {
+                    <td>@claim.Type</td>
+                }
+            }
+
+            <td>@claim.Value</td>
+        </tr>
+    }
+
+</table>
+
+@{
+    List<string> groupClaims = new List<string>();
+
+    if (ViewData.ContainsKey("groupClaims"))
+    {
+        groupClaims = ViewData["groupClaims"] as List<string>;
+    }
+
+}
